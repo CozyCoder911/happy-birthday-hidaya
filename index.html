@@ -98,6 +98,8 @@ main{
   color:var(--rose);padding-left:.35em;
 }
 .char .bob{animation:bob 1.8s ease-in-out infinite;filter:drop-shadow(0 0 14px rgba(255,143,182,.35))}
+/* the sprite canvases have empty margins left and right: pull them in so the characters sit right next to the message */
+.char .bob{margin-inline:calc(var(--px) * var(--fit,1) * -11)}
 .char.girl .bob{animation-delay:.5s}
 @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
 
