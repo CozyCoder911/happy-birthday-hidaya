@@ -1,0 +1,1564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Happy Birthday, Hidaya</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+/* =========================================================
+   THEME  (change colors & fonts here)
+   ========================================================= */
+:root{
+  --bg-top:#2a1740;
+  --bg-bottom:#0b0716;
+  --rose:#ff8fb6;
+  --rose-deep:#e0618f;
+  --cream:#ffe9c7;
+  --soft:#c9bcd6;          /* secondary text */
+  --text:#f3e9f7;
+  --glass:rgba(255,255,255,.06);
+
+  --font-title:'Cormorant Garamond',serif;
+  --font-ui:'Jost',sans-serif;
+
+  --px:2px;                /* size of one pixel in the top sprites */
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100%}
+body{
+  font-family:var(--font-ui);
+  color:var(--text);
+  background:radial-gradient(ellipse at 50% 15%,var(--bg-top),var(--bg-bottom) 75%) fixed;
+  overflow-x:hidden;
+  -webkit-tap-highlight-color:transparent;
+}
+
+/* twinkling stars */
+.stars,.stars2{position:fixed;inset:0;pointer-events:none;z-index:0}
+.stars{
+  background-image:
+    radial-gradient(1.5px 1.5px at 20% 30%,#fff,transparent),
+    radial-gradient(1px 1px at 70% 20%,#ffd9ec,transparent),
+    radial-gradient(1.5px 1.5px at 85% 60%,#fff,transparent),
+    radial-gradient(1px 1px at 10% 80%,#cfe0ff,transparent),
+    radial-gradient(1px 1px at 50% 70%,#fff,transparent),
+    radial-gradient(1.5px 1.5px at 35% 10%,#fff,transparent);
+  animation:tw 4s infinite alternate;
+}
+.stars2{
+  background-image:
+    radial-gradient(1px 1px at 12% 15%,#fff,transparent),
+    radial-gradient(1.5px 1.5px at 60% 45%,#ffd9ec,transparent),
+    radial-gradient(1px 1px at 90% 85%,#fff,transparent),
+    radial-gradient(1px 1px at 28% 55%,#cfe0ff,transparent),
+    radial-gradient(1.5px 1.5px at 78% 8%,#fff,transparent),
+    radial-gradient(1px 1px at 45% 92%,#fff,transparent);
+  animation:tw 5s 1.5s infinite alternate;
+}
+@keyframes tw{from{opacity:.3}to{opacity:1}}
+
+/* floating background decorations */
+#floaters{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:1}
+.floater{position:absolute;bottom:-40px;opacity:.75;animation:floatUp linear forwards;filter:drop-shadow(0 0 8px rgba(255,143,182,.5))}
+@keyframes floatUp{
+  0%{transform:translateY(0) translateX(0) rotate(0)}
+  50%{transform:translateY(-55vh) translateX(25px) rotate(20deg)}
+  100%{transform:translateY(-115vh) translateX(-15px) rotate(-15deg);opacity:0}
+}
+
+main{
+  position:relative;z-index:2;
+  max-width:1050px;margin:0 auto;
+  padding:40px 16px 70px;
+  display:flex;flex-direction:column;align-items:center;gap:40px;
+}
+
+/* =========================================================
+   STAGE: boy | message | girl
+   ========================================================= */
+.stage{
+  width:100%;
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  align-items:center;
+  gap:22px;
+}
+.char{transform-origin:50% 90%;position:relative;z-index:4;display:flex;flex-direction:column;align-items:center;gap:14px}
+.char .name{
+  font-size:.7rem;letter-spacing:.35em;text-transform:uppercase;
+  color:var(--rose);padding-left:.35em;
+}
+.char .bob{animation:bob 1.8s ease-in-out infinite;filter:drop-shadow(0 0 14px rgba(255,143,182,.35))}
+.char.girl .bob{animation-delay:.5s}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+
+.card{
+  background:var(--glass);
+  border:1px solid rgba(255,143,182,.35);
+  border-radius:30px;
+  padding:38px 30px;
+  text-align:center;
+  box-shadow:0 0 60px rgba(255,143,182,.12), inset 0 0 40px rgba(255,143,182,.04);
+  backdrop-filter:blur(6px);
+  min-height:330px;
+}
+.eyebrow{font-size:.72rem;letter-spacing:.5em;text-transform:uppercase;color:var(--rose);padding-left:.5em;margin-bottom:12px}
+.card h1{
+  font-family:var(--font-title);font-style:italic;font-weight:500;
+  font-size:clamp(2.2rem,6vw,3.6rem);line-height:1.1;margin-bottom:18px;
+  color:#fff;text-shadow:0 0 30px rgba(255,143,182,.55);
+}
+#message{
+  font-family:var(--font-title);font-style:italic;font-weight:500;
+  font-size:clamp(1.25rem,3.2vw,1.7rem);
+  line-height:1.55;
+  white-space:pre-line;min-height:8.5em;color:#fff4ea;
+}
+.para{display:inline;opacity:0;animation:paraIn 1.2s ease forwards}
+@keyframes paraIn{to{opacity:1}}
+.cursor{display:inline-block;width:2px;height:1em;background:var(--cream);margin-left:2px;vertical-align:text-bottom;animation:blink .8s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+
+/* =========================================================
+   PIXEL SPRITES (rendered by JS with box-shadow)
+   ========================================================= */
+.sprite{position:relative;width:calc(var(--w) * var(--px));height:calc(var(--h) * var(--px));image-rendering:pixelated}
+.sprite .px{position:absolute;top:0;left:0;width:var(--px);height:var(--px)}
+.sprite{filter:drop-shadow(0 4px 0 rgba(74,44,94,.25))}
+.sprite img{width:100%;height:100%;image-rendering:pixelated;display:block}
+.flower{position:absolute;font-size:calc(var(--px) * 3.2);top:34%;line-height:1}
+.boy .flower{right:calc(var(--px) * -3.5)}
+.girl .flower{left:calc(var(--px) * -3.5)}
+
+/* =========================================================
+   MINI GAME
+   ========================================================= */
+.game{width:100%;max-width:640px;text-align:center}
+.game h2{
+  font-family:var(--font-title);font-style:italic;font-weight:500;font-size:2.2rem;
+  color:var(--cream);text-shadow:0 0 24px rgba(255,233,199,.4);
+}
+.game p.hint{font-size:.95rem;font-weight:300;color:var(--soft);margin:6px 0 16px;line-height:1.6}
+.game p.hint small{opacity:.7;font-size:.8rem;letter-spacing:.05em}
+
+#arena{
+  --px:2px;
+  position:relative;height:215px;border-radius:24px;overflow:hidden;
+  background:
+    radial-gradient(1.5px 1.5px at 15% 25%,#fff,transparent),
+    radial-gradient(1px 1px at 40% 15%,#ffd9ec,transparent),
+    radial-gradient(1.5px 1.5px at 62% 30%,#fff,transparent),
+    radial-gradient(1px 1px at 80% 18%,#cfe0ff,transparent),
+    radial-gradient(circle at 90% 22%,rgba(255,233,199,.9) 0 14px,rgba(255,233,199,.15) 15px 30px,transparent 31px),
+    linear-gradient(#1b1030,#3a1f55 75%,#5a2a63);
+  border:1px solid rgba(255,143,182,.4);
+  box-shadow:0 0 40px rgba(255,143,182,.15);
+  touch-action:none;user-select:none;
+}
+/* weather: sunny when she is close, gloomy rain when she is far */
+#sunny,#gloom{position:absolute;inset:0;pointer-events:none}
+#sunny{
+  background:
+    radial-gradient(circle at 86% 22%,#fff6c4 0 16px,rgba(255,214,120,.55) 17px 34px,transparent 35px),
+    linear-gradient(#ffcf9e,#ffadc6 60%,#d79ad8);
+}
+#gloom{
+  background:
+    radial-gradient(ellipse 90px 26px at 20% 18%,rgba(150,150,170,.95),transparent 70%),
+    radial-gradient(ellipse 120px 30px at 55% 12%,rgba(130,130,150,.95),transparent 70%),
+    radial-gradient(ellipse 90px 24px at 85% 20%,rgba(150,150,170,.95),transparent 70%),
+    linear-gradient(#3a3a4a,#4a4a5c 70%,#55556a);
+}
+#gloom::after{
+  content:"";position:absolute;inset:0;
+  background:repeating-linear-gradient(105deg,rgba(200,215,255,.45) 0 1px,transparent 1px 11px);
+  background-size:100% 40px;animation:rain .35s linear infinite;
+}
+@keyframes rain{from{background-position:0 0}to{background-position:-8px 40px}}
+
+#couple{position:fixed;left:0;top:0;z-index:12;pointer-events:none;opacity:0;transition:opacity .25s;
+  filter:drop-shadow(0 0 10px rgba(255,214,120,.9)) drop-shadow(0 0 24px rgba(255,143,182,.8))}
+#couple.show{opacity:1}
+.aura{position:fixed;width:300px;height:300px;border-radius:50%;pointer-events:none;z-index:11;
+  background:radial-gradient(circle,rgba(255,240,180,.9),rgba(255,143,182,.5) 40%,rgba(167,139,250,.25) 60%,transparent 72%);
+  animation:aura 2.4s ease-in-out forwards}
+@keyframes aura{0%{opacity:0;transform:translate(-50%,-50%) scale(.2)}25%{opacity:1;transform:translate(-50%,-50%) scale(1)}75%{opacity:.85;transform:translate(-50%,-50%) scale(1.1)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.5)}}
+.ring{position:fixed;border-radius:50%;pointer-events:none;z-index:13;border:3px solid rgba(255,236,190,.95);
+  box-shadow:0 0 18px #ff8fb6,inset 0 0 18px #ff8fb6;animation:ring 1.3s ease-out forwards}
+@keyframes ring{from{width:10px;height:10px;opacity:1;transform:translate(-50%,-50%)}to{width:420px;height:420px;opacity:0;transform:translate(-50%,-50%)}}
+body.flash::after{content:"";position:fixed;inset:0;z-index:30;pointer-events:none;background:rgba(255,240,210,.55);animation:flash .6s ease-out forwards}
+@keyframes flash{from{opacity:1}to{opacity:0}}
+
+#ground{
+  position:absolute;left:0;right:0;bottom:0;height:22px;
+  background:#1a0d2b;
+  border-top:2px solid var(--rose);
+  box-shadow:0 -4px 20px rgba(255,143,182,.35);
+}
+#gBoy,#gGirl{position:absolute;bottom:22px;left:0}
+#gBoy{display:flex;flex-direction:column;align-items:center}
+#energyWrap{width:86px;margin-bottom:8px;text-align:center}
+#energyLabel{font-size:.55rem;letter-spacing:.25em;text-transform:uppercase;margin-bottom:5px;color:var(--cream);white-space:nowrap}
+#energyBar{height:10px;border-radius:8px;background:rgba(255,255,255,.12);border:1px solid rgba(255,233,199,.6);overflow:hidden}
+#energyFill{height:100%;width:100%;background:linear-gradient(90deg,var(--rose-deep),var(--rose),var(--cream));box-shadow:0 0 10px var(--rose);transition:width .1s linear}
+.heartP{position:absolute;pointer-events:none;animation:heartPop 1.2s ease-out forwards;filter:drop-shadow(0 0 6px rgba(255,143,182,.8))}
+@keyframes heartPop{0%{opacity:1;transform:translateY(0) scale(.6)}100%{opacity:0;transform:translateY(-70px) scale(1.2)}}
+
+.touch{display:none;gap:14px;justify-content:center;margin-top:16px}
+.touch button{
+  width:90px;height:56px;border-radius:40px;font-size:1.3rem;
+  color:var(--cream);background:transparent;border:1px solid rgba(255,233,199,.5);
+  touch-action:none;transition:background .2s;
+}
+.touch button:active{background:rgba(255,233,199,.15)}
+@media (hover:none),(pointer:coarse){.touch{display:flex}}
+
+/* =========================================================
+   FINAL
+   ========================================================= */
+#hugBtn{
+  font-family:var(--font-ui);font-weight:400;font-size:.9rem;
+  letter-spacing:.22em;text-transform:uppercase;
+  padding:16px 36px;border-radius:40px;cursor:pointer;
+  color:var(--cream);background:rgba(255,143,182,.12);
+  border:1px solid rgba(255,233,199,.55);
+  box-shadow:0 0 26px rgba(255,143,182,.25);
+  transition:letter-spacing .3s,background .3s,transform .1s;
+}
+#hugBtn:hover{background:rgba(255,143,182,.22);letter-spacing:.3em}
+#hugBtn:active{transform:scale(.96)}
+#finalLine{
+  font-family:var(--font-title);font-style:italic;font-weight:500;
+  font-size:clamp(1.4rem,4.2vw,2.1rem);
+  color:var(--cream);text-align:center;max-width:660px;line-height:1.5;
+  text-shadow:0 0 28px rgba(255,143,182,.5);
+  opacity:0;transform:translateY(10px);transition:all 1.6s ease;
+}
+#finalLine.show{opacity:1;transform:none}
+#hugLine{
+  position:fixed;z-index:40;pointer-events:none;width:min(88vw,520px);transform:translate(-50%,12px);
+  padding:18px 22px;border-radius:20px;
+  background:rgba(24,12,40,.92);border:1px solid rgba(255,143,182,.7);
+  box-shadow:0 0 30px rgba(255,143,182,.45),0 10px 30px rgba(0,0,0,.4);
+  font-family:var(--font-title);font-style:italic;font-weight:600;font-size:clamp(1.15rem,3.4vw,1.6rem);
+  line-height:1.45;text-align:center;color:#fff;
+  opacity:0;transition:opacity .7s ease, transform .7s ease;
+}
+#hugLine.show{opacity:1;transform:translate(-50%,0)}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width:700px){
+  :root{--px:2px}
+  .stage{grid-template-columns:1fr 1fr;grid-template-areas:"boy girl" "card card"}
+  .char.boy{grid-area:boy;justify-self:start}
+  .char.girl{grid-area:girl;justify-self:end}
+  .card{grid-area:card;padding:28px 18px}
+  #arena{--px:2px;height:205px}
+}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01s!important}}
+</style>
+</head>
+
+<body>
+<div class="stars"></div>
+<div class="stars2"></div>
+<div id="floaters"></div>
+
+<main>
+  <section class="stage" id="stage">
+    <div class="char boy" id="topBoy"><div class="bob" data-sprite="boy" data-flower="1"></div><span class="name">Ayman</span></div>
+
+    <div class="card" id="card">
+      <p class="eyebrow">October 21</p>
+      <h1>Happy Birthday, Hidaya ❤️</h1>
+      <p id="message"></p>
+    </div>
+
+    <div class="char girl" id="topGirl"><div class="bob" data-sprite="girl" data-flower="1"></div><span class="name">Hidaya</span></div>
+  </section>
+
+  <section class="game">
+    <h2>Our Love Energy</h2>
+    <p class="hint">Move Hidaya close to me… I feel empty without you<br><small>← → or A / D · drag or use the buttons on mobile</small></p>
+    <div id="arena">
+      <div id="sunny"></div>
+      <div id="gloom"></div>
+      <div id="gBoy">
+        <div id="energyWrap"><div id="energyLabel">Love energy</div><div id="energyBar"><div id="energyFill"></div></div></div>
+        <div data-sprite="boy" id="gBoySprite"></div>
+      </div>
+      <div id="gGirl"><div data-sprite="girl"></div></div>
+      <div id="ground"></div>
+    </div>
+    <div class="touch">
+      <button id="btnL" aria-label="Move left">◀</button>
+      <button id="btnR" aria-label="Move right">▶</button>
+    </div>
+  </section>
+
+  <div id="couple" data-sprite="couple"></div>
+  <button id="hugBtn">One more hug?</button>
+  <p id="finalLine">Out of everyone in this whole universe, my heart chose you, and it would choose you again, every single time. Happy Birthday, Hidaya ❤️</p>
+</main>
+
+<script>
+/* =========================================================
+   CONFIG – edit things here
+   ========================================================= */
+const CONFIG = {
+  // Birthday message (typed out, one letter at a time).
+  message:
+`My beautiful Hidaya,
+
+Out of all the people in this world, I'm so grateful life led me to you.
+
+If I could wish you one thing, it would be to see yourself through my eyes, even for a second. Then you'd understand how rare, beautiful, and deeply loved you truly are.
+
+May life be as gentle with your heart as your presence is beautiful to mine.
+
+Happy birthday, my love. ❤️`,
+  typeSpeedMs: 28,
+  flowers: ['🌷','🌺','💋','😘'],
+  floaters: ['❤️','💗','🌸','💕','✨','🌷','🦋','🦋'],
+
+  /* Characters. To use your own art later:
+       1) set image: 'boy.png'  (any pixel-art PNG, ideally transparent), or
+       2) edit the `map` rows + `palette` below.
+     Each letter in the map is one pixel; '.' is empty. */
+  sprites: {
+    // Each character has several poses (frames) used for walking, throwing flowers, hugging and moods.
+    boy: {   // Ayman
+      palette:{'h':'#121012','H':'#2c2729','f':'#c9a488','s':'#f0c6a2','S':'#d8a37f','E':'#0e0c0d','e':'#1a0e0a','p':'#3d4560','Q':'#4d5674','P':'#2f3650','w':'#ffffff','b':'#121012','m':'#c08070','c':'#26386f','C':'#3c5296','D':'#1a2650','g':'#8a96b9','W':'#ffffff','R':'#e04440','B':'#5b3a29','Y':'#e2b84e','G':'#a9a9b8','i':'#3a2418','F':'#b8957c','L':'#2e2430','l':'#6e6080','v':'#121012','n':'#b07a5c','M':'#6a3a34','T':'#b8865f','K':'#1a1416','0':'#080708','1':'#131112','2':'#524337','3':'#6c5948','4':'#614939','5':'#080708','6':'#0b1124','7':'#1b2443','8':'#111931','9':'#281a12','!':'#1b1f2b','$':'#151824','%':'#727272','&':'#4c4c52'},
+      frames:{
+        idle:[
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "...................001001001001...................",
+          ".................00hhHhhHhhHhhH10.................",
+          "................0hhHhhhHhhhHhhhHh0................",
+          "...............0hHhhhhhhhHhhhhHhhh0...............",
+          "...............0hhHhhhhhhhHhhhhhHh0...............",
+          "...............0hhhhhHhhhhhhhHhhhh0...............",
+          "...............2FFssssssssssssssFF2...............",
+          "...............2FssssssssssssssssF2...............",
+          "...............3ssssssssssssssssss3...............",
+          "...............3sEEEEEEssssEEEEEEs3...............",
+          "...............3sEEEEEEssssEEEEEEs3...............",
+          "...............3ssssssssssssssssss3...............",
+          "..............34KKKKKKKKKKKKKKKKKK43..............",
+          ".............3sSsKsweewKssKweewsKsSs3.............",
+          ".............3sSsKsssssKssKsssssKsSs3.............",
+          ".............3sssKKKKKKKssKKKKKKKsss3.............",
+          ".............3sssssssssssSssssssssss3.............",
+          "..............3ssssssssnSSnssssssss3..............",
+          "...............5bssssssssssssssssb5...............",
+          "...............5bbssbbbbbbbbbbssbb5...............",
+          "...............5bbbbbbbbbbbbbbbbbb5...............",
+          "...............5bbbbbbmmmmmmbbbbbb5...............",
+          "...............5bbbbbbbbbbbbbbbbbb5...............",
+          "................5bbbbbbbbbbbbbbbb5................",
+          ".................5bbbbbbbbbbbbbb5.................",
+          "..................5bbbbbbbbbbbb5..................",
+          "...................5bbbbbbbbbb5...................",
+          "....................5bbbbbbbb5....................",
+          "....................4SssssssS4....................",
+          "....................4SssssssS4....................",
+          "....................6SssssssS6....................",
+          "...............78887DDcSSSScDD88886...............",
+          "..............7CcccCcccSggScccccccD6..............",
+          "..............7CcccCccccggccccccccD6..............",
+          "..............7CcccCCcccgWcWRcDcccD6..............",
+          "..............7CcccCCcccggccccDcccD6..............",
+          "..............6DDDDCCcccgWccccDDDDD6..............",
+          "...............3ss7CCcccCCccccD3ss3...............",
+          "...............3ss7CCcccccccccD3ss3...............",
+          "...............3ss7CCcccccccccD3ss3...............",
+          "...............3ss7CCcccccccccD3ss3...............",
+          "...............3ss7CCcccccccccD3ss3...............",
+          "...............3ss7CCcccccccccD3ss3...............",
+          "...............4SS7CCcccccccccD4SS4...............",
+          "...............4SS9BBBBBYYBBBBB4SS4...............",
+          "................44!pppppppppppP$44................",
+          "..................!pppppppppppP$..................",
+          "..................!pppppPpppppP$..................",
+          "..................!ppppp!!ppppP$..................",
+          "..................!ppppp!!ppppP$..................",
+          "..................!ppppp!!ppppP$..................",
+          "..................!ppppp!!ppppP$..................",
+          "..................!ppppp!!ppppP$..................",
+          "..................!ppppp!!ppppP$..................",
+          "..................%ppppp!!ppppP&..................",
+          ".................%wwwwwG&%wwwwwG&.................",
+          ".................&GGGGGG&&GGGGGG&.................",
+          "..................&&&&&&..&&&&&&.................."
+        ],
+        walk1:[
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "...................001001001001...................",
+          ".................00hhHhhHhhHhhH10.................",
+          "................0hhHhhhHhhhHhhhHh0................",
+          "...............0hHhhhhhhhHhhhhHhhh0...............",
+          "...............0hhHhhhhhhhHhhhhhHh0...............",
+          "...............0hhhhhHhhhhhhhHhhhh0...............",
+          "...............2FFssssssssssssssFF2...............",
+          "...............2FssssssssssssssssF2...............",
+          "...............3ssssssssssssssssss3...............",
+          "...............3sEEEEEEssssEEEEEEs3...............",
+          "...............3sEEEEEEssssEEEEEEs3...............",
+          "...............3ssssssssssssssssss3...............",
+          "..............34KKKKKKKKKKKKKKKKKK43..............",
+          ".............3sSsKsweewKssKweewsKsSs3.............",
+          ".............3sSsKsssssKssKsssssKsSs3.............",
+          ".............3sssKKKKKKKssKKKKKKKsss3.............",
+          ".............3sssssssssssSssssssssss3.............",
+          "..............3ssssssssnSSnssssssss3..............",
+          "...............5bssssssssssssssssb5...............",
+          "...............5bbssbbbbbbbbbbssbb5...............",
+          "...............5bbbbbbbbbbbbbbbbbb5...............",
+          "...............5bbbbbbmmmmmmbbbbbb5...............",
+          "...............5bbbbbbbbbbbbbbbbbb5...............",
+          "................5bbbbbbbbbbbbbbbb5................",
+          ".................5bbbbbbbbbbbbbb5.................",
+          "..................5bbbbbbbbbbbb5..................",
+          "...................5bbbbbbbbbb5...................",
+          "....................5bbbbbbbb5....................",
+          "....................4SssssssS4....................",
+          "....................4SssssssS4....................",
+          "....................6SssssssS6....................",
+          "...............78887DDcSSSScDD88886...............",
+          "..............7CcccCcccSggScccccccD6..............",
+          "..............7CcccCccccggccccccccD6..............",
+          "..............7CcccCCcccgWcWRcDcccD6..............",
+          "..............7CcccCCcccggccccDcccD6..............",
+          "..............6DDDDCCcccgWccccDDssD6..............",
+          "...............3ss7CCcccCCccccD3ss3...............",
+          "...............3ss7CCcccccccccD3ss3...............",
+          "...............3ss7CCcccccccccD3ss3...............",
+          "...............3ss7CCcccccccccD3ss3...............",
+          "...............3ss7CCcccccccccD3ss3...............",
+          "...............3ss7CCcccccccccD4SS4...............",
+          "...............4SS7CCcccccccccD4SS4...............",
+          "...............4SS9BBBBBYYBBBBB944................",
+          "................44!pppppppppppP$..................",
+          "..................!pppppppppppP$..................",
+          "..................!pppppPpppppP$..................",
+          "..................!ppppp!!ppppP$..................",
+          "..................!ppppp!!ppppP$..................",
+          "..................!ppppp!!ppppP$..................",
+          "..................!ppppp!!ppppP$..................",
+          "..................!ppppp!!ppppP$..................",
+          "..................%ppppp!!ppppP$..................",
+          ".................%wwwwwG&!ppppP&..................",
+          ".................&GGGGGG&%wwwwwG&.................",
+          "..................&&&&&&.&GGGGGG&.................",
+          "..........................&&&&&&.................."
+        ],
+        walk2:[
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "...................001001001001...................",
+          ".................00hhHhhHhhHhhH10.................",
+          "................0hhHhhhHhhhHhhhHh0................",
+          "...............0hHhhhhhhhHhhhhHhhh0...............",
+          "...............0hhHhhhhhhhHhhhhhHh0...............",
+          "...............0hhhhhHhhhhhhhHhhhh0...............",
+          "...............2FFssssssssssssssFF2...............",
+          "...............2FssssssssssssssssF2...............",
+          "...............3ssssssssssssssssss3...............",
+          "...............3sEEEEEEssssEEEEEEs3...............",
+          "...............3sEEEEEEssssEEEEEEs3...............",
+          "...............3ssssssssssssssssss3...............",
+          "..............34KKKKKKKKKKKKKKKKKK43..............",
+          ".............3sSsKsweewKssKweewsKsSs3.............",
+          ".............3sSsKsssssKssKsssssKsSs3.............",
+          ".............3sssKKKKKKKssKKKKKKKsss3.............",
+          ".............3sssssssssssSssssssssss3.............",
+          "..............3ssssssssnSSnssssssss3..............",
+          "...............5bssssssssssssssssb5...............",
+          "...............5bbssbbbbbbbbbbssbb5...............",
+          "...............5bbbbbbbbbbbbbbbbbb5...............",
+          "...............5bbbbbbmmmmmmbbbbbb5...............",
+          "...............5bbbbbbbbbbbbbbbbbb5...............",
+          "................5bbbbbbbbbbbbbbbb5................",
+          ".................5bbbbbbbbbbbbbb5.................",
+          "..................5bbbbbbbbbbbb5..................",
+          "...................5bbbbbbbbbb5...................",
+          "....................5bbbbbbbb5....................",
+          "....................4SssssssS4....................",
+          "....................4SssssssS4....................",
+          "....................6SssssssS6....................",
+          "...............78887DDcSSSScDD88886...............",
+          "..............7CcccCcccSggScccccccD6..............",
+          "..............7CcccCccccggccccccccD6..............",
+          "..............7CcccCCcccgWcWRcDcccD6..............",
+          "..............7CcccCCcccggccccDcccD6..............",
+          "..............6DssDCCcccgWccccDDDDD6..............",
+          "...............3ss7CCcccCCccccD3ss3...............",
+          "...............3ss7CCcccccccccD3ss3...............",
+          "...............3ss7CCcccccccccD3ss3...............",
+          "...............3ss7CCcccccccccD3ss3...............",
+          "...............3ss7CCcccccccccD3ss3...............",
+          "...............4SS7CCcccccccccD3ss3...............",
+          "...............4SS7CCcccccccccD4SS4...............",
+          "................449BBBBBYYBBBBB4SS4...............",
+          "..................!pppppppppppP$44................",
+          "..................!pppppppppppP$..................",
+          "..................!pppppPpppppP$..................",
+          "..................!ppppp!!ppppP$..................",
+          "..................!ppppp!!ppppP$..................",
+          "..................!ppppp!!ppppP$..................",
+          "..................!ppppp!!ppppP$..................",
+          "..................!ppppp!!ppppP$..................",
+          "..................!ppppp!!ppppP&..................",
+          "..................%ppppp!%wwwwwG&.................",
+          ".................%wwwwwG&&GGGGGG&.................",
+          ".................&GGGGGG&.&&&&&&..................",
+          "..................&&&&&&.........................."
+        ],
+        throw:[
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "...................001001001001...................",
+          ".................00hhHhhHhhHhhH10.................",
+          "................0hhHhhhHhhhHhhhHh0................",
+          "...............0hHhhhhhhhHhhhhHhhh0...............",
+          "...............0hhHhhhhhhhHhhhhhHh0...............",
+          "...............0hhhhhHhhhhhhhHhhhh0...............",
+          "...............2FFssssssssssssssFF2...............",
+          "...............2FssssssssssssssssF2...............",
+          "...............3ssssssssssssssssss3...............",
+          "...............3sEEEEEEssssEEEEEEs3...............",
+          "...............3sEEEEEEssssEEEEEEs3...............",
+          "...............3ssssssssssssssssss3...............",
+          "..............34KKKKKKKKKKKKKKKKKK43..............",
+          ".............3sSsKsweewKssKweewsKsSs3.............",
+          ".............3sSsKsssssKssKsssssKsSs3.............",
+          ".............3sssKKKKKKKssKKKKKKKsss3.............",
+          ".............3sssssssssssSssssssssss3.............",
+          "..............3ssssssssnSSnssssssss3..............",
+          "...............5bssssssssssssssssb5...............",
+          "...............5bbssbbbbbbbbbbssbb5...............",
+          "...............5bbbbbbbbbbbbbbbbbb5...............",
+          "...............5bbbbbbmmmmmmbbbbbb5...............",
+          "...............5bbbbbbbbbbbbbbbbbb5...............",
+          "................5bbbbbbbbbbbbbbbb5..44............",
+          ".................5bbbbbbbbbbbbbb5..4SS4...........",
+          "..................5bbbbbbbbbbbb5...4SS4...........",
+          "...................5bbbbbbbbbb5....3ss3...........",
+          "....................5bbbbbbbb5.....3ss3...........",
+          "....................4SssssssS4....3ss3............",
+          "....................4SssssssS4....3ss3............",
+          "....................6SssssssS6...3ss3.............",
+          "...............78887DDcSSSScDD8888ss3.............",
+          "..............7CcccCcccSggSccccccc83..............",
+          "..............7CcccCccccggccccccccc8..............",
+          "..............7CcccCCcccgWcWRcD8ccc8..............",
+          "..............7CcccCCcccggccccD6888...............",
+          "..............6DDDDCCcccgWccccD6..................",
+          "...............3ss7CCcccCCccccD6..................",
+          "...............3ss7CCcccccccccD6..................",
+          "...............3ss7CCcccccccccD6..................",
+          "...............3ss7CCcccccccccD6..................",
+          "...............3ss7CCcccccccccD6..................",
+          "...............3ss7CCcccccccccD6..................",
+          "...............4SS7CCcccccccccD6..................",
+          "...............4SS9BBBBBYYBBBBB9..................",
+          "................44!pppppppppppP$..................",
+          "..................!pppppppppppP$..................",
+          "..................!pppppPpppppP$..................",
+          "..................!ppppp!!ppppP$..................",
+          "..................!ppppp!!ppppP$..................",
+          "..................!ppppp!!ppppP$..................",
+          "..................!ppppp!!ppppP$..................",
+          "..................!ppppp!!ppppP$..................",
+          "..................!ppppp!!ppppP$..................",
+          "..................%ppppp!!ppppP&..................",
+          ".................%wwwwwG&%wwwwwG&.................",
+          ".................&GGGGGG&&GGGGGG&.................",
+          "..................&&&&&&..&&&&&&.................."
+        ],
+        hug:[
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "...................001001001001...................",
+          ".................00hhHhhHhhHhhH10.................",
+          "................0hhHhhhHhhhHhhhHh0................",
+          "...............0hHhhhhhhhHhhhhHhhh0...............",
+          "...............0hhHhhhhhhhHhhhhhHh0...............",
+          "...............0hhhhhHhhhhhhhHhhhh0...............",
+          "...............2FFssssssssssssssFF2...............",
+          "...............2FssssssssssssssssF2...............",
+          "...............3ssssssssssssssssss3...............",
+          "...............3sEEEEEEssssEEEEEEs3...............",
+          "...............3sEEEEEEssssEEEEEEs3...............",
+          "...............3ssssssssssssssssss3...............",
+          "..............34KKKKKKKKKKKKKKKKKK43..............",
+          ".............3sSsKsweewKssKweewsKsSs3.............",
+          ".............3sSsKsssssKssKsssssKsSs3.............",
+          ".............3sssKKKKKKKssKKKKKKKsss3.............",
+          ".............3sssssssssssSssssssssss3.............",
+          "..............3ssssssssnSSnssssssss3..............",
+          "...............5bssssssssssssssssb5...............",
+          "...............5bbssbbbbbbbbbbssbb5...............",
+          "...............5bbbbbbbbbbbbbbbbbb5...............",
+          "...............5bbbbbbmmmmmmbbbbbb5...............",
+          "...............5bbbbbbbbbbbbbbbbbb5...............",
+          "................5bbbbbbbbbbbbbbbb5................",
+          ".................5bbbbbbbbbbbbbb5.................",
+          "..................5bbbbbbbbbbbb5..................",
+          "...................5bbbbbbbbbb5...................",
+          "....................5bbbbbbbb5....................",
+          "....................4SssssssS4....................",
+          "....................4SssssssS4....................",
+          "....................6SssssssS6....................",
+          "...............78887DDcSSSScDD88888...............",
+          "..............7CcccCcccSggScccccccc3333333344.....",
+          "..............7CcccCccccggcccccccccssssssssSS4....",
+          "..............7CcccCCcccgWcWRcDccccssssssssSS4....",
+          "..............7CcccCCcccggccccDcccc8333333344.....",
+          "..............6DDDDCCcccgWccccD6888...............",
+          "...............3ss7CCcccCCccccD6..................",
+          "...............3ss7CCcccccccccD6..................",
+          "...............3ss7CCcccccccccD6..................",
+          "...............3ss7CCcccccccccD6..................",
+          "...............3ss7CCcccccccccD6..................",
+          "...............3ss7CCcccccccccD6..................",
+          "...............4SS7CCcccccccccD6..................",
+          "...............4SS9BBBBBYYBBBBB9..................",
+          "................44!pppppppppppP$..................",
+          "..................!pppppppppppP$..................",
+          "..................!pppppPpppppP$..................",
+          "..................!ppppp!!ppppP$..................",
+          "..................!ppppp!!ppppP$..................",
+          "..................!ppppp!!ppppP$..................",
+          "..................!ppppp!!ppppP$..................",
+          "..................!ppppp!!ppppP$..................",
+          "..................!ppppp!!ppppP$..................",
+          "..................%ppppp!!ppppP&..................",
+          ".................%wwwwwG&%wwwwwG&.................",
+          ".................&GGGGGG&&GGGGGG&.................",
+          "..................&&&&&&..&&&&&&.................."
+        ],
+        sad:[
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "...................001001001001...................",
+          ".................00hhHhhHhhHhhH10.................",
+          "................0hhHhhhHhhhHhhhHh0................",
+          "...............0hHhhhhhhhHhhhhHhhh0...............",
+          "...............0hhHhhhhhhhHhhhhhHh0...............",
+          "...............0hhhhhHhhhhhhhHhhhh0...............",
+          "...............2FFssssssssssssssFF2...............",
+          "...............2FssssssssssssssssF2...............",
+          "...............3ssssssssssssssssss3...............",
+          "...............3ssssEEEssssEEEssss3...............",
+          "...............3sEEEEEEssssEEEEEEs3...............",
+          "...............3ssssssssssssssssss3...............",
+          "..............34KKKKKKKKKKKKKKKKKK43..............",
+          ".............3sSsKsssssKssKsssssKsSs3.............",
+          ".............3sSsKsweewKssKweewsKsSs3.............",
+          ".............3sssKKKKKKKssKKKKKKKsss3.............",
+          ".............3sssssssssssSssssssssss3.............",
+          "..............3ssssssssnSSnssssssss3..............",
+          "...............5bssssssssssssssssb5...............",
+          "...............5bbssbbbbbbbbbbssbb5...............",
+          "...............5bbbbbbbbbbbbbbbbbb5...............",
+          "...............5bbbbbbbmmmmbbbbbbb5...............",
+          "...............5bbbbbbmbbbbmbbbbbb5...............",
+          "................5bbbbbbbbbbbbbbbb5................",
+          ".................5bbbbbbbbbbbbbb5.................",
+          "..................5bbbbbbbbbbbb5..................",
+          "...................5bbbbbbbbbb5...................",
+          "....................5bbbbbbbb5....................",
+          "....................6SssssssS6....................",
+          "...............78887DDcSSSScDD88886...............",
+          "..............7CcccCcccSggScccccccD6..............",
+          "..............7CcccCccccggccccccccD6..............",
+          "..............7CcccCCcccgWcWRcDcccD6..............",
+          "..............7CcccCCcccggccccDcccD6..............",
+          "..............6DDDDCCcccgWccccDDDDD6..............",
+          "...............3ss7CCcccCCccccD3ss3...............",
+          "...............3ss7CCcccccccccD3ss3...............",
+          "...............3ss7CCcccccccccD3ss3...............",
+          "...............3ss7CCcccccccccD3ss3...............",
+          "...............3ss7CCcccccccccD3ss3...............",
+          "...............3ss7CCcccccccccD3ss3...............",
+          "...............4SS7CCcccccccccD4SS4...............",
+          "...............4SS9BBBBBYYBBBBB4SS4...............",
+          "................44!pppppppppppP$44................",
+          "..................!pppppppppppP$..................",
+          "..................!pppppPpppppP$..................",
+          "..................!ppppp!!ppppP$..................",
+          "..................!ppppp!!ppppP$..................",
+          "..................!ppppp!!ppppP$..................",
+          "..................!ppppp!!ppppP$..................",
+          "..................!ppppp!!ppppP$..................",
+          "..................!ppppp!!ppppP$..................",
+          "..................%ppppp!!ppppP&..................",
+          ".................%wwwwwG&%wwwwwG&.................",
+          ".................&GGGGGG&&GGGGGG&.................",
+          "..................&&&&&&..&&&&&&.................."
+        ],
+        happy:[
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          ".................0010001000100010.................",
+          "................0hhHhhhHhhhHhhhHh0................",
+          "...............0hHhhhhhhhHhhhhHhhh0...............",
+          "...............0hhHhhhhhhhHhhhhhHh0...............",
+          "...............0hhhhhHhhhhhhhHhhhh0...............",
+          "...............2FFssssssssssssssFF2...............",
+          "...............2FssssssssssssssssF2...............",
+          "...............3ssssssssssssssssss3...............",
+          "...............3sEEEEEEssssEEEEEEs3...............",
+          "...............3sEEEEEEssssEEEEEEs3...............",
+          "...............3ssssssssssssssssss3...............",
+          "..............34KKKKKKKKKKKKKKKKKK43..............",
+          ".............3sSsKsweewKssKweewsKsSs3.............",
+          ".............3sSsKsssssKssKsssssKsSs3.............",
+          ".............3sssKKKKKKKssKKKKKKKsss3.............",
+          ".............3sssssssssssSssssssssss3.............",
+          "..............3ssssssssnSSnssssssss3..............",
+          "...............5bssssssssssssssssb5...............",
+          "...............5bbssbbbbbbbbbbssbb5...............",
+          "...............5bbbbbbbbbbbbbbbbbb5...............",
+          "...............5bbbbbMWWWWWWMbbbbb5...............",
+          "...............5bbbbbbmmmmmmbbbbbb5...............",
+          "................5bbbbbbbbbbbbbbbb5................",
+          ".................5bbbbbbbbbbbbbb5.................",
+          "..................5bbbbbbbbbbbb5..................",
+          "...................5bbbbbbbbbb5...................",
+          "....................5bbbbbbbb5....................",
+          "....................4SssssssS4....................",
+          "....................4SssssssS4....................",
+          "....................4SssssssS4....................",
+          "....................6684444866....................",
+          "...............78887DDcSSSScDD88886...............",
+          "..............7CcccCcccSggScccccccD6..............",
+          "..............7CcccCccccggccccccccD6..............",
+          "..............7CcccCCcccgWcWRcDcccD6..............",
+          "..............7CcccCCcccggccccDcccD6..............",
+          "..............6DDDDCCcccgWccccDDDDD6..............",
+          "...............3ss7CCcccCCccccD3ss3...............",
+          "...............3ss7CCcccccccccD3ss3...............",
+          "...............3ss7CCcccccccccD3ss3...............",
+          "...............3ss7CCcccccccccD3ss3...............",
+          "...............3ss7CCcccccccccD3ss3...............",
+          "...............3ss7CCcccccccccD3ss3...............",
+          "...............4SS7CCcccccccccD4SS4...............",
+          "...............4SS9BBBBBYYBBBBB4SS4...............",
+          "................44!pppppppppppP$44................",
+          "..................!pppppppppppP$..................",
+          "..................!pppppPpppppP$..................",
+          "..................!ppppp!!ppppP$..................",
+          "..................!ppppp!!ppppP$..................",
+          "..................!ppppp!!ppppP$..................",
+          "..................!ppppp!!ppppP$..................",
+          "..................!ppppp!!ppppP$..................",
+          "..................!ppppp!!ppppP$..................",
+          "..................%ppppp!!ppppP&..................",
+          ".................%wwwwwG&%wwwwwG&.................",
+          ".................&GGGGGG&&GGGGGG&.................",
+          "..................&&&&&&..&&&&&&.................."
+        ]
+      }
+    },
+    girl: {  // Hidaya
+      palette:{'h':'#1d1b27','H':'#39354e','a':'#2b2836','A':'#4a4562','r':'#5a2a1e','q':'#b5562f','s':'#ffe2cf','S':'#f2bfa6','E':'#3a2018','e':'#1e1218','w':'#ffffff','p':'#6a3a28','k':'#ffaab2','R':'#c4566a','d':'#a8222f','G':'#f4c040','b':'#ff86b5','n':'#6a6488','j':'#1d1b26','J':'#403b58','N':'#e0a890','L':'#e8b0a8','K':'#5a4c5c','i':'#4a2a1e','W':'#ffffff','0':'#0d0c11','1':'#211f2c','2':'#131218','3':'#1c1a27','4':'#0d0c11','5':'#72655d','6':'#723c51'},
+      frames:{
+        idle:[
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "....................0000000000....................",
+          "..................00hhhhhhhhhh00..................",
+          ".................0hhhhhhHHhhhhhh0.................",
+          "................0hhhhHhhhhhhhhhhh0................",
+          "...............0hhhhhhhhhhhhhhhhhh0...............",
+          "...............0hhhhhhrrsrrrhhhhhh0...............",
+          "...............0hhhhhrrrsrrrrhhhhh0...............",
+          "...............0hhhhrrrrsrrrrrhhhh0...............",
+          "...............0hhhrrrssssssrrrhhh0...............",
+          "...............0hhrrrssssssssrrrhh0...............",
+          "...............0hhrsEEEssssEEEsrhh0...............",
+          "...............0hhrEEEEssssEEEErhh0...............",
+          "...............0hhrssssssssssssrhh0...............",
+          "...............0hheeeeesssseeeeehh0...............",
+          "...............0hhrwWiwsssswWiwrhh0...............",
+          "...............0hhrsiissssssiisrhh0...............",
+          "...............0hrsssssssSssssssrh0...............",
+          "...............0hrskksssNSNsskksrh0...............",
+          "...............0hGssksssssssskssGh0...............",
+          "...............0hrssssRRRRRRssssrh0...............",
+          "...............0hrsssssRRRRsssssrh0...............",
+          "...............0hhrSssssssssssSrhh0...............",
+          "...............0hhhrSSssssssSSrhhh0...............",
+          "...............0hhhhhSSSSSSSShhhhh0...............",
+          "...............0hhhhhhhhhhhhhhhhhh0...............",
+          "..............0hhhhhHhhhhhhhhhhhhhh0..............",
+          ".............0hhhhhhhHHhhhhhhhhhhhhh0.............",
+          ".............0hhhhhhhhhHHhhhhhhHhhhh0.............",
+          "............0hhhhHhhhhhhhHHhhhhhHhhhh0............",
+          ".............01AaaAhHhhhhhhhHhhhaaa20.............",
+          "..............1AaaAhhHhhhhhHhhhhaaa2..............",
+          "..............1AaaAhhhhhHhhhhhhaaaa2..............",
+          "..............1AaaAaaaaaaGaaaaaaaaa2..............",
+          "..............1AaaAaaaaaGaGaaaaaaaa2..............",
+          "..............1AaaAaaaaaaGaaaaaaaaa2..............",
+          "..............1Aaa1AaaaaaAaaaaa2aaa2..............",
+          "..............1Aaa1AaaaaaAaaaaa2aaa2..............",
+          "..............1Aaa1Aaaaaanaaaaa2aaa2..............",
+          "..............1Aaa1AaaaaaAaaaaa2aaa2..............",
+          "..............1Aaa1AaaaaaAaaaaa2aaa2..............",
+          "..............1Aaa3JJJJJJJJJJJJ4aaa2..............",
+          "..............1AAAJjjjjjjjjjjjjjAAA1..............",
+          "..............5sJjjjjjjjjjjjjjjjjjs5..............",
+          "..............3JjjJjjjJjjjJjjjJjjjj4..............",
+          ".............3JjjjJjjjJjjjjJjjjJjjjj4.............",
+          "............3JjjjJjjjjJjjjjJjjjJjjjjj4............",
+          "............3JjjjJjjjjJjjjjJjjjJjjjjj4............",
+          "...........3JjjjJjjjjJjjjjjJjjjjJjjjjj4...........",
+          "...........3JjjjJjjjjJjjjjjJjjjjJjjjjj4...........",
+          "..........3JjjjjJjjjjJjjjjjJjjjjjJjjjjj4..........",
+          "..........3JjjjjJjjjjJjjjjjJjjjjjJjjjjj4..........",
+          "..........3JjjjjJjjjjJjjjjjJjjjjjJjjjjj4..........",
+          "..........3JjjjjJjjjjJjjjjjJjjjjjJjjjjj4..........",
+          "...........3JjjjJjjjjJjjjjjJjjjjJjjjjj4...........",
+          "............33JJJJJJJJJJJJJJJJJJJJJJ34............",
+          "..............333336bbbb66bbbb633333..............",
+          "....................6666..6666....................",
+          ".................................................."
+        ],
+        walk1:[
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "....................0000000000....................",
+          "..................00hhhhhhhhhh00..................",
+          ".................0hhhhhhHHhhhhhh0.................",
+          "................0hhhhHhhhhhhhhhhh0................",
+          "...............0hhhhhhhhhhhhhhhhhh0...............",
+          "...............0hhhhhhrrsrrrhhhhhh0...............",
+          "...............0hhhhhrrrsrrrrhhhhh0...............",
+          "...............0hhhhrrrrsrrrrrhhhh0...............",
+          "...............0hhhrrrssssssrrrhhh0...............",
+          "...............0hhrrrssssssssrrrhh0...............",
+          "...............0hhrsEEEssssEEEsrhh0...............",
+          "...............0hhrEEEEssssEEEErhh0...............",
+          "...............0hhrssssssssssssrhh0...............",
+          "...............0hheeeeesssseeeeehh0...............",
+          "...............0hhrwWiwsssswWiwrhh0...............",
+          "...............0hhrsiissssssiisrhh0...............",
+          "...............0hrsssssssSssssssrh0...............",
+          "...............0hrskksssNSNsskksrh0...............",
+          "...............0hGssksssssssskssGh0...............",
+          "...............0hrssssRRRRRRssssrh0...............",
+          "...............0hrsssssRRRRsssssrh0...............",
+          "...............0hhrSssssssssssSrhh0...............",
+          "...............0hhhrSSssssssSSrhhh0...............",
+          "...............0hhhhhSSSSSSSShhhhh0...............",
+          "...............0hhhhhhhhhhhhhhhhhh0...............",
+          "..............0hhhhhHhhhhhhhhhhhhhh0..............",
+          ".............0hhhhhhhHHhhhhhhhhhhhhh0.............",
+          ".............0hhhhhhhhhHHhhhhhhHhhhh0.............",
+          "............0hhhhHhhhhhhhHHhhhhhHhhhh0............",
+          ".............01AaaAhHhhhhhhhHhhhaaa20.............",
+          "..............1AaaAhhHhhhhhHhhhhaaa2..............",
+          "..............1AaaAhhhhhHhhhhhhaaaa2..............",
+          "..............1AaaAaaaaaaGaaaaaaaaa2..............",
+          "..............2aaaAaaaaaGaGaaaaaaaa2..............",
+          "..............2aaaAaaaaaaGaaaaaaaaa2..............",
+          "..............2aaa1AaaaaaAaaaaa2aaa2..............",
+          "..............2aaa1AaaaaaAaaaaa2aaa2..............",
+          "..............2aaa1Aaaaaanaaaaa2aaa2..............",
+          "..............2aaa1AaaaaaAaaaaa2aaa2..............",
+          "..............2aaa1AaaaaaAaaaaa2aaa2..............",
+          "..............1AAA3JJJJJJJJJJJJ4aaa2..............",
+          "..............5ss4JjjjjjjjjjjjjjAAA1..............",
+          "..............5sJjjjjjjjjjjjjjjjjjs5..............",
+          "..............3JjjJjjjJjjjJjjjJjjjj4..............",
+          ".............3JjjjJjjjJjjjjJjjjJjjjj4.............",
+          "............3JjjjJjjjjJjjjjJjjjJjjjjj4............",
+          "............3JjjjJjjjjJjjjjJjjjJjjjjj4............",
+          "...........3JjjjJjjjjJjjjjjJjjjjJjjjjj4...........",
+          "............3JjjjJjjjjJjjjjjJjjjjJjjjjj4..........",
+          "...........3JjjjjJjjjjJjjjjjJjjjjjJjjjjj4.........",
+          "...........3JjjjjJjjjjJjjjjjJjjjjjJjjjjj4.........",
+          "...........3JjjjjJjjjjJjjjjjJjjjjjJjjjjj4.........",
+          "...........3JjjjjJjjjjJjjjjjJjjjjjJjjjjj4.........",
+          "............3JjjjJjjjjJjjjjjJjjjjJjjjjj4..........",
+          ".............33JJJJJJJJJJJJJJJJJJJJJJ34...........",
+          "...............33336bbbb6333333333333.............",
+          "....................6666..........................",
+          ".................................................."
+        ],
+        walk2:[
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "....................0000000000....................",
+          "..................00hhhhhhhhhh00..................",
+          ".................0hhhhhhHHhhhhhh0.................",
+          "................0hhhhHhhhhhhhhhhh0................",
+          "...............0hhhhhhhhhhhhhhhhhh0...............",
+          "...............0hhhhhhrrsrrrhhhhhh0...............",
+          "...............0hhhhhrrrsrrrrhhhhh0...............",
+          "...............0hhhhrrrrsrrrrrhhhh0...............",
+          "...............0hhhrrrssssssrrrhhh0...............",
+          "...............0hhrrrssssssssrrrhh0...............",
+          "...............0hhrsEEEssssEEEsrhh0...............",
+          "...............0hhrEEEEssssEEEErhh0...............",
+          "...............0hhrssssssssssssrhh0...............",
+          "...............0hheeeeesssseeeeehh0...............",
+          "...............0hhrwWiwsssswWiwrhh0...............",
+          "...............0hhrsiissssssiisrhh0...............",
+          "...............0hrsssssssSssssssrh0...............",
+          "...............0hrskksssNSNsskksrh0...............",
+          "...............0hGssksssssssskssGh0...............",
+          "...............0hrssssRRRRRRssssrh0...............",
+          "...............0hrsssssRRRRsssssrh0...............",
+          "...............0hhrSssssssssssSrhh0...............",
+          "...............0hhhrSSssssssSSrhhh0...............",
+          "...............0hhhhhSSSSSSSShhhhh0...............",
+          "...............0hhhhhhhhhhhhhhhhhh0...............",
+          "..............0hhhhhHhhhhhhhhhhhhhh0..............",
+          ".............0hhhhhhhHHhhhhhhhhhhhhh0.............",
+          ".............0hhhhhhhhhHHhhhhhhHhhhh0.............",
+          "............0hhhhHhhhhhhhHHhhhhhHhhhh0............",
+          ".............01AaaAhHhhhhhhhHhhhaaa20.............",
+          "..............1AaaAhhHhhhhhHhhhhaaa2..............",
+          "..............1AaaAhhhhhHhhhhhhaaaa2..............",
+          "..............1AaaAaaaaaaGaaaaaaaaa2..............",
+          "..............1AaaAaaaaaGaGaaaaaaaa2..............",
+          "..............1AaaAaaaaaaGaaaaaaaaa2..............",
+          "..............1Aaa1AaaaaaAaaaaa2aaa2..............",
+          "..............1Aaa1AaaaaaAaaaaa2aaa2..............",
+          "..............1Aaa1Aaaaaanaaaaa2aaa2..............",
+          "..............1Aaa1AaaaaaAaaaaa2aaa2..............",
+          "..............1Aaa1AaaaaaAaaaaa2aaa2..............",
+          "..............1Aaa3JJJJJJJJJJJJ4AAA1..............",
+          "..............1AAAJjjjjjjjjjjjjj4ss5..............",
+          "..............5sJjjjjjjjjjjjjjjjjjs5..............",
+          "..............3JjjJjjjJjjjJjjjJjjjj4..............",
+          ".............3JjjjJjjjJjjjjJjjjJjjjj4.............",
+          "............3JjjjJjjjjJjjjjJjjjJjjjjj4............",
+          "............3JjjjJjjjjJjjjjJjjjJjjjjj4............",
+          "...........3JjjjJjjjjJjjjjjJjjjjJjjjjj4...........",
+          "..........3JjjjJjjjjJjjjjjJjjjjJjjjjj4............",
+          ".........3JjjjjJjjjjJjjjjjJjjjjjJjjjjj4...........",
+          ".........3JjjjjJjjjjJjjjjjJjjjjjJjjjjj4...........",
+          ".........3JjjjjJjjjjJjjjjjJjjjjjJjjjjj4...........",
+          ".........3JjjjjJjjjjJjjjjjJjjjjjJjjjjj4...........",
+          "..........3JjjjJjjjjJjjjjjJjjjjJjjjjj4............",
+          "...........33JJJJJJJJJJJJJJJJJJJJJJ34.............",
+          ".............3333333333336bbbb63333...............",
+          "..........................6666....................",
+          ".................................................."
+        ],
+        throw:[
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "....................0000000000....................",
+          "..................00hhhhhhhhhh00..................",
+          ".................0hhhhhhHHhhhhhh0.................",
+          "................0hhhhHhhhhhhhhhhh0................",
+          "...............0hhhhhhhhhhhhhhhhhh0...............",
+          "...............0hhhhhhrrsrrrhhhhhh0...............",
+          "...............0hhhhhrrrsrrrrhhhhh0...............",
+          "...............0hhhhrrrrsrrrrrhhhh0...............",
+          "...............0hhhrrrssssssrrrhhh0...............",
+          "...............0hhrrrssssssssrrrhh0...............",
+          "...............0hhrsEEEssssEEEsrhh0...............",
+          "...............0hhrEEEEssssEEEErhh0...............",
+          "...............0hhrssssssssssssrhh0...............",
+          "...............0hheeeeesssseeeeehh0...............",
+          "...............0hhrwWiwsssswWiwrhh0...............",
+          "...............0hhrsiissssssiisrhh0...............",
+          "...............0hrsssssssSssssssrh0...............",
+          "...............0hrskksssNSNsskksrh0...............",
+          "...............0hGssksssssssskssGh0...............",
+          "...............0hrssssRRRRRRssssrh0...............",
+          "...............0hrsssssRRRRsssssrh0...............",
+          "...............0hhrSssssssssssSrhh0...............",
+          "............55.0hhhrSSssssssSSrhhh0...............",
+          "...........5ss50hhhhhSSSSSSSShhhhh0...............",
+          "...........5ss50hhhhhhhhhhhhhhhhhh0...............",
+          "...........2aa2hhhhhHhhhhhhhhhhhhhh0..............",
+          "............2aahhhhhhHHhhhhhhhhhhhhh0.............",
+          "............2aahhhhhhhhHHhhhhhhHhhhh0.............",
+          "............0haahHhhhhhhhHHhhhhhHhhhh0............",
+          ".............2aaaaAhHhhhhhhhHhhhaaa20.............",
+          "..............2aaaAhhHhhhhhHhhhhaaa2..............",
+          "..............2aaaAhhhhhHhhhhhhaaaa2..............",
+          "..............2aaaAaaaaaaGaaaaaaaaa2..............",
+          "..............2aaaAaaaaaGaGaaaaaaaa2..............",
+          "...............221AaaaaaaGaaaaaaaaa2..............",
+          "..................1AaaaaaAaaaaa2aaa2..............",
+          "..................1AaaaaaAaaaaa2aaa2..............",
+          "..................1Aaaaaanaaaaa2aaa2..............",
+          "..................1AaaaaaAaaaaa2aaa2..............",
+          "..................1AaaaaaAaaaaa2aaa2..............",
+          "..................3JJJJJJJJJJJJ4aaa2..............",
+          "................34JjjjjjjjjjjjjjAAA1..............",
+          "...............3Jjjjjjjjjjjjjjjjjjs5..............",
+          "..............3JjjJjjjJjjjJjjjJjjjj4..............",
+          ".............3JjjjJjjjJjjjjJjjjJjjjj4.............",
+          "............3JjjjJjjjjJjjjjJjjjJjjjjj4............",
+          "............3JjjjJjjjjJjjjjJjjjJjjjjj4............",
+          "...........3JjjjJjjjjJjjjjjJjjjjJjjjjj4...........",
+          "...........3JjjjJjjjjJjjjjjJjjjjJjjjjj4...........",
+          "..........3JjjjjJjjjjJjjjjjJjjjjjJjjjjj4..........",
+          "..........3JjjjjJjjjjJjjjjjJjjjjjJjjjjj4..........",
+          "..........3JjjjjJjjjjJjjjjjJjjjjjJjjjjj4..........",
+          "..........3JjjjjJjjjjJjjjjjJjjjjjJjjjjj4..........",
+          "...........3JjjjJjjjjJjjjjjJjjjjJjjjjj4...........",
+          "............33JJJJJJJJJJJJJJJJJJJJJJ34............",
+          "..............333336bbbb66bbbb633333..............",
+          "....................6666..6666....................",
+          ".................................................."
+        ],
+        hug:[
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "..................................................",
+          "....................0000000000....................",
+          "..................00hhhhhhhhhh00..................",
+          ".................0hhhhhhHHhhhhhh0.................",
+          "................0hhhhHhhhhhhhhhhh0................",
+          "...............0hhhhhhhhhhhhhhhhhh0...............",
+          "...............0hhhhhhrrsrrrhhhhhh0...............",
+          "...............0hhhhhrrrsrrrrhhhhh0...............",
+          "...............0hhhhrrrrsrrrrrhhhh0...............",
+          "...............0hhhrrrssssssrrrhhh0...............",
+          "...............0hhrrrssssssssrrrhh0...............",
+          "...............0hhrsEEEssssEEEsrhh0...............",
+          "...............0hhrEEEEssssEEEErhh0...............",
+          "...............0hhrssssssssssssrhh0...............",
+          "...............0hheeeeesssseeeeehh0...............",
+          "...............0hhrwWiwsssswWiwrhh0...............",
+          "...............0hhrsiissssssiisrhh0...............",
+          "...............0hrsssssssSssssssrh0...............",
+          "...............0hrskksssNSNsskksrh0...............",
+          "...............0hGssksssssssskssGh0...............",
+          "...............0hrssssRRRRRRssssrh0...............",
+          "...............0hrsssssRRRRsssssrh0...............",
+          "...............0hhrSssssssssssSrhh0...............",
+          "...............0hhhrSSssssssSSrhhh0...............",
+          "...............0hhhhhSSSSSSSShhhhh0...............",
+          "...............0hhhhhhhhhhhhhhhhhh0...............",
+          "..............0hhhhhHhhhhhhhhhhhhhh0..............",
+          ".............0hhhhhhhHHhhhhhhhhhhhhh0.............",
+          ".............0hhhhhhhhhHHhhhhhhHhhhh0.............",
+          "............0hhhhHhhhhhhhHHhhhhhHhhhh0............",
+          "....55122222222aaaAhHhhhhhhhHhhhaaa20.............",
+          "...5ssAaaaaaaaaaaaAhhHhhhhhHhhhhaaa2..............",
+          "...5ssaaaaaaaaaaaaAhhhhhHhhhhhhaaaa2..............",
+          "....55222222222aaaAaaaaaaGaaaaaaaaa2..............",
+          "...............221AaaaaaGaGaaaaaaaa2..............",
+          ".................1AaaaaaaGaaaaaaaaa2..............",
+          "..................1AaaaaaAaaaaa2aaa2..............",
+          "..................1AaaaaaAaaaaa2aaa2..............",
+          "..................1Aaaaaanaaaaa2aaa2..............",
+          "..................1AaaaaaAaaaaa2aaa2..............",
+          "..................1AaaaaaAaaaaa2aaa2..............",
+          "..................3JJJJJJJJJJJJ4aaa2..............",
+          "................34JjjjjjjjjjjjjjAAA1..............",
+          "...............3Jjjjjjjjjjjjjjjjjjs5..............",
+          "..............3JjjJjjjJjjjJjjjJjjjj4..............",
+          ".............3JjjjJjjjJjjjjJjjjJjjjj4.............",
+          "............3JjjjJjjjjJjjjjJjjjJjjjjj4............",
+          "............3JjjjJjjjjJjjjjJjjjJjjjjj4............",
+          "...........3JjjjJjjjjJjjjjjJjjjjJjjjjj4...........",
+          "...........3JjjjJjjjjJjjjjjJjjjjJjjjjj4...........",
+          "..........3JjjjjJjjjjJjjjjjJjjjjjJjjjjj4..........",
+          "..........3JjjjjJjjjjJjjjjjJjjjjjJjjjjj4..........",
+          "..........3JjjjjJjjjjJjjjjjJjjjjjJjjjjj4..........",
+          "..........3JjjjjJjjjjJjjjjjJjjjjjJjjjjj4..........",
+          "...........3JjjjJjjjjJjjjjjJjjjjJjjjjj4...........",
+          "............33JJJJJJJJJJJJJJJJJJJJJJ34............",
+          "..............333336bbbb66bbbb633333..............",
+          "....................6666..6666....................",
+          ".................................................."
+        ]
+      }
+    },
+    couple: {  // the two of them in a real hug
+      palette:{'h':'#121012','H':'#2c2729','f':'#c9a488','s':'#f0c6a2','S':'#d8a37f','E':'#0e0c0d','e':'#1a0e0a','p':'#3d4560','Q':'#4d5674','P':'#2f3650','w':'#ffffff','b':'#121012','m':'#c08070','c':'#26386f','C':'#3c5296','D':'#1a2650','g':'#8a96b9','W':'#ffffff','R':'#e04440','B':'#5b3a29','Y':'#e2b84e','G':'#a9a9b8','i':'#3a2418','F':'#b8957c','L':'#2e2430','l':'#6e6080','v':'#121012','n':'#b07a5c','M':'#6a3a34','T':'#b8865f','K':'#1a1416','α':'#1d1b27','β':'#39354e','γ':'#2b2836','δ':'#4a4562','ε':'#5a2a1e','ζ':'#b5562f','η':'#ffe2cf','θ':'#f2bfa6','ι':'#3a2018','κ':'#1e1218','λ':'#ffffff','μ':'#6a3a28','ν':'#ffaab2','ξ':'#c4566a','ο':'#a8222f','π':'#f4c040','ρ':'#ff86b5','σ':'#6a6488','τ':'#1d1b26','υ':'#403b58','φ':'#e0a890','χ':'#e8b0a8','ψ':'#5a4c5c','ω':'#4a2a1e','Γ':'#ffffff','0':'#080708','1':'#131112','2':'#0d0c11','3':'#524337','4':'#6c5948','5':'#614939','6':'#080708','7':'#131218','8':'#0b1124','9':'#72655d','!':'#211f2c','$':'#1b2443','%':'#111931','&':'#1c1a27','*':'#0d0c11','+':'#281a12','-':'#1b1f2b','=':'#151824','?':'#727272','@':'#4c4c52','^':'#723c51'},
+      frames:{
+        idle:[
+          "......................................................................",
+          "......................................................................",
+          "......................................................................",
+          "......................................................................",
+          "......................................................................",
+          "......................................................................",
+          "......................................................................",
+          "......................................................................",
+          "......................................................................",
+          ".....................001001001001.....................................",
+          "...................00hhHhhHhhHhhH10...................................",
+          "..................0hhHhhhHhhhHhhhHh0..2222222222......................",
+          ".................0hHhhhhhhhHhhhhHhhh22αααααααααα22....................",
+          ".................0hhHhhhhhhhHhhhhhHhααααααββαααααα2...................",
+          ".................0hhhhhHhhhhhhhHhhhααααβααααααααααα2..................",
+          ".................3FFssssssssssssssαααααααααααααααααα2.................",
+          ".................3Fsssssssssssssssααααααεεηεεεαααααα2.................",
+          ".................4ssssssssssssssssαααααεεεηεεεεααααα2.................",
+          ".................4sEEEEEEssssEEEEEααααεεεεηεεεεεαααα2.................",
+          ".................4sEEEEEEssssEEEEEαααεεεηηηηηηεεεααα2.................",
+          ".................4ssssssssssssssssααεεεηηηηηηηηεεεαα2.................",
+          "................45KKKKKKKKKKKKKKKKααεηιιιηηηηιιιηεαα2.................",
+          "...............4sSsKsweewKssKweewsααειιιιηηηηιιιιεαα2.................",
+          "...............4sSsKsssssKssKsssssααεηηηηηηηηηηηηεαα2.................",
+          "...............4sssKKKKKKKssKKKKKKαακκκκκηηηηκκκκκαα2.................",
+          "...............4sssssssssssSssssssααελΓωληηηηλΓωλεαα2.................",
+          "................4ssssssssnSSnsssssααεηωωηηηηηηωωηεαα2.................",
+          ".................6bsssssssssssssssαεηηηηηηηθηηηηηηεα2.................",
+          ".................6bbssbbbbbbbbbbssαεηννηηηφθφηηννηεα2.................",
+          ".................6bbbbbbbbbbbbbbbbαπηηνηηηηηηηηνηηπα2.................",
+          ".................6bbbbbbmmmmmmbbbbαεηηηηξξξξξξηηηηεα2.................",
+          ".................6bbbbbbbbbbbbbbbbαεηηηηηξξξξηηηηηεα2.................",
+          "..................6bbbbbbbbbbbbbbbααεθηηηηηηηηηηθεαα2.................",
+          "...................6bbbbbbbbbbbbbbαααεθθηηηηηηθθεααα2.................",
+          "....................6bbbbbbbbbbbb2αααααθθθθθθθθααααα2.................",
+          ".....................5bbbbbbbbbb62αααααααααααααααααα2.................",
+          "....................5Ssbbbbbbbb62αααααβαααααααααααααα27...............",
+          "....................5SsSssssssS2αααααααββαααααααααααααγ7..............",
+          "....................8SsSssssssS2αααααααααββααααααβααααγ7..............",
+          "..............99!777DDcSssssssSααααβαααααααββαααααβαααα2..............",
+          ".............9ηηδγγγγγγγγγγγγγγγγγγγγγδγγγγγγπγγγγγγγγγ7..............",
+          ".............9ηηδγγγγγγγγγγγγγγγγγγγγγδγγγγγπγπγγγγγγγγ7..............",
+          ".............9ηCcccCCcccgWcWRcDcccD87!δγγγγγγπγγγγγγγγγ7..............",
+          "..............$CcccCCcccggccccDcccD8..!δγγγγγδγγγγγ7γγγ7..............",
+          "..............8DDDDCCcccgWccccDDDDD8..!δγγγγγδγγγγγ7γγγ7..............",
+          "...............4ss$CCcccCCccccD%%%%4444δγγγγγσγγγγγ4SSγ7..............",
+          "...............4ss$CCcccccccccDccccsssssssssssssssssSSγ7..............",
+          "...............4ss$CCcccccccccDsssssssssssssssssssssSγγ7..............",
+          "...............4ss$CCcccccccccD8444444&υυυυυυυυυυυυ*γγγ7..............",
+          "...............4ss$CCcccccccccD8....&*υτττττττττττττδδδ!..............",
+          "...............4ss$CCcccccccccD8...&υτττττττττττττττττη9..............",
+          "...............5SS$CCcccccccccD8..&υττυτττυτττυτττυττττ*..............",
+          "...............5SS+BBBBBYYBBBBB+.&υτττυτττυττττυτττυττττ*.............",
+          "................55-pppppppppppP=&υτττυττττυττττυτττυτττττ*............",
+          "..................-pppppppppppP=&υτττυττττυττττυτττυτττττ*............",
+          "..................-pppppPpppppP&υτττυττττυτττττυττττυτττττ*...........",
+          "..................-ppppp--ppppP&υτττυττττυτττττυττττυτττττ*...........",
+          "..................-ppppp--ppppPυττττυττττυτττττυτττττυτττττ*..........",
+          "..................-ppppp--ppppPυττττυττττυτττττυτττττυτττττ*..........",
+          "..................-ppppp--ppppPυττττυττττυτττττυτττττυτττττ*..........",
+          "..................-ppppp--ppppPυττττυττττυτττττυτττττυτττττ*..........",
+          "..................-ppppp--ppppP&υτττυττττυτττττυττττυτττττ*...........",
+          "..................?ppppp--ppppP@&&υυυυυυυυυυυυυυυυυυυυυυ&*............",
+          ".................?wwwwwG@?wwwwwG@.&&&&&^ρρρρ^^ρρρρ^&&&&&..............",
+          ".................@GGGGGG@@GGGGGG@.......^^^^..^^^^....................",
+          "..................@@@@@@..@@@@@@......................................"
+        ]
+      }
+    }
+  }
+};
+
+/* =========================================================
+   SPRITE RENDERER
+   ========================================================= */
+Object.values(CONFIG.sprites).forEach(def=>def.map = def.frames.idle);
+
+function buildSprite(el, key){
+  const def = CONFIG.sprites[key];
+  const w = def.map[0].length, h = def.map.length;
+  const box = document.createElement('div');
+  box.className = 'sprite';
+  box.style.setProperty('--w', w);
+  box.style.setProperty('--h', h);
+  box._layers = {};
+  for(const [pose, rows] of Object.entries(def.frames)){
+    const shadows = [];
+    rows.forEach((row,y)=>[...row].forEach((ch,x)=>{
+      if(ch !== '.' && def.palette[ch]) shadows.push(`calc(${x} * var(--px)) calc(${y} * var(--px)) 0 ${def.palette[ch]}`);
+    }));
+    const px = document.createElement('div');
+    px.className = 'px';
+    px.style.boxShadow = shadows.join(',');
+    px.style.display = pose === 'idle' ? 'block' : 'none';
+    box.appendChild(px);
+    box._layers[pose] = px;
+  }
+  box._pose = 'idle';
+  el.appendChild(box);
+  return box;
+}
+function setPose(box, pose){
+  if(!box || box._pose === pose) return;
+  for(const [k,layer] of Object.entries(box._layers)) layer.style.display = k === pose ? 'block' : 'none';
+  box._pose = pose;
+}
+// alternate the two walking frames for `ms` milliseconds, then go back to `end`
+function walkFor(box, ms, end='idle'){
+  clearInterval(box._walk);
+  let step = 0;
+  setPose(box,'walk1');
+  box._walk = setInterval(()=>setPose(box, step++%2 ? 'walk1' : 'walk2'), 160);
+  clearTimeout(box._walkEnd);
+  box._walkEnd = setTimeout(()=>{ clearInterval(box._walk); setPose(box,end); }, ms);
+}
+document.querySelectorAll('[data-sprite]').forEach(el=>buildSprite(el, el.dataset.sprite));
+const topBoySprite = document.querySelector('#topBoy .sprite'), topGirlSprite = document.querySelector('#topGirl .sprite');
+let hugging = false;
+
+/* =========================================================
+   FLOATING BACKGROUND
+   ========================================================= */
+const floaters = document.getElementById('floaters');
+function spawnFloater(){
+  const s = document.createElement('span');
+  s.className = 'floater';
+  s.textContent = CONFIG.floaters[Math.random()*CONFIG.floaters.length|0];
+  s.style.left = Math.random()*100 + 'vw';
+  s.style.fontSize = (14 + Math.random()*20) + 'px';
+  s.style.animationDuration = (9 + Math.random()*8) + 's';
+  floaters.appendChild(s);
+  setTimeout(()=>s.remove(), 18000);
+}
+setInterval(spawnFloater, 900);
+for(let i=0;i<8;i++) setTimeout(spawnFloater, i*200);
+
+/* =========================================================
+   TYPEWRITER
+   ========================================================= */
+const msgEl = document.getElementById('message');
+// show the full message right away, each paragraph fading in softly
+const paras = CONFIG.message.split('\n\n');
+paras.forEach((para,i)=>{
+  const p = document.createElement('span');
+  p.className = 'para';
+  p.textContent = para + (i < paras.length-1 ? '\n\n' : '');
+  p.style.animationDelay = (i*0.35) + 's';
+  msgEl.appendChild(p);
+});
+
+/* =========================================================
+   THROWING FLOWERS (top characters -> center)
+   ========================================================= */
+const card = document.getElementById('card');
+function throwFlower(fromEl){
+  if(hugging) return;
+  setPose(fromEl,'throw'); setTimeout(()=>{ if(!hugging && fromEl._pose==='throw') setPose(fromEl,'idle'); }, 450);
+  const a = fromEl.getBoundingClientRect(), c = card.getBoundingClientRect();
+  const flower = document.createElement('span');
+  flower.textContent = CONFIG.flowers[Math.random()*CONFIG.flowers.length|0];
+  Object.assign(flower.style,{position:'fixed',left:0,top:0,fontSize:'24px',pointerEvents:'none',zIndex:5});
+  document.body.appendChild(flower);
+
+  const fromBoy = fromEl === topBoySprite;
+  const sx = a.left + a.width*(fromBoy ? .72 : .26), sy = a.top + a.height*0.12;
+  const tx = c.left + c.width/2 + (Math.random()-.5)*c.width*0.4;
+  const ty = c.top + c.height*(0.25 + Math.random()*0.5);
+  const arc = Math.min(120, Math.abs(tx-sx)*0.35) + 40;
+  const anim = flower.animate([
+    {transform:`translate(${sx}px,${sy}px) scale(.6) rotate(0deg)`,opacity:1},
+    {transform:`translate(${(sx+tx)/2}px,${Math.min(sy,ty)-arc}px) scale(1.1) rotate(180deg)`,opacity:1,offset:.5},
+    {transform:`translate(${tx}px,${ty}px) scale(.9) rotate(360deg)`,opacity:.9}
+  ],{duration:1500,easing:'ease-in-out'});
+  anim.onfinish = ()=>{ flower.remove(); };
+}
+let turn = 0;
+setInterval(()=>{
+  throwFlower(turn++%2 ? topGirlSprite : topBoySprite);
+}, 1100);
+// every few seconds they take a little stroll toward each other and back
+setInterval(()=>{
+  if(hugging) return;
+  [[topBoySprite,14],[topGirlSprite,-14]].forEach(([s,dx])=>{
+    walkFor(s,1600);
+    s.parentElement.animate([{transform:'translateX(0)'},{transform:`translateX(${dx}px)`,offset:.5},{transform:'translateX(0)'}],{duration:1600,easing:'ease-in-out'});
+  });
+}, 7000);
+
+/* =========================================================
+   MINI GAME: Our Love Energy
+   ========================================================= */
+(function game(){
+  const arena = document.getElementById('arena');
+  const gBoy = document.getElementById('gBoy');
+  const gGirl = document.getElementById('gGirl');
+  const gBoySprite = document.getElementById('gBoySprite');
+  const fill = document.getElementById('energyFill');
+  const label = document.getElementById('energyLabel');
+
+  const SPEED = 260;            // pixels per second for Hidaya
+  const CLOSE = 0.22;           // "close" distance (fraction of arena width)
+  const FAR   = 0.65;           // beyond this he's fully gray
+  const GAIN  = 0.7;            // how fast energy refills
+  const LOSS  = 0.18;           // how fast energy drains
+  let energy = 0.5, lastHeart = 0, last = performance.now();
+  let girlX = 0, boyX = 16, dragging = false;
+  const keys = {left:false,right:false};
+
+  const gGirlSprite = gGirl.querySelector('.sprite'), gBoyBox = gBoySprite.querySelector('.sprite');
+  let lastGirlX = null, moving = 0;
+  const sunny = document.getElementById('sunny'), gloom = document.getElementById('gloom');
+
+  function sizes(){
+    const px = parseFloat(getComputedStyle(arena).getPropertyValue('--px')) || 5;
+    const sw = CONFIG.sprites.girl.map[0].length*px, w = arena.clientWidth;
+    return {w, sw, minX: boyX + sw + 10, maxX: w - sw - 6};
+  }
+  function init(){
+    gBoy.style.left = boyX + 'px';
+    const s = sizes();
+    girlX = Math.min(Math.max(girlX || s.maxX, s.minX), s.maxX);
+  }
+  init(); window.addEventListener('resize', init);
+
+  // keyboard
+  addEventListener('keydown', e=>{
+    const k = e.key.toLowerCase();
+    if(k==='arrowleft'||k==='a'){keys.left=true; e.preventDefault();}
+    if(k==='arrowright'||k==='d'){keys.right=true; e.preventDefault();}
+  });
+  addEventListener('keyup', e=>{
+    const k = e.key.toLowerCase();
+    if(k==='arrowleft'||k==='a') keys.left=false;
+    if(k==='arrowright'||k==='d') keys.right=false;
+  });
+  // touch buttons
+  function hold(btn,dir){
+    const on = e=>{e.preventDefault(); keys[dir]=true;};
+    const off= e=>{e.preventDefault(); keys[dir]=false;};
+    btn.addEventListener('pointerdown',on);
+    ['pointerup','pointerleave','pointercancel'].forEach(ev=>btn.addEventListener(ev,off));
+  }
+  hold(document.getElementById('btnL'),'left');
+  hold(document.getElementById('btnR'),'right');
+  // drag inside arena
+  function dragTo(e){
+    const r = arena.getBoundingClientRect(), s = sizes();
+    girlX = Math.min(Math.max(e.clientX - r.left - s.sw/2, s.minX), s.maxX);
+  }
+  arena.addEventListener('pointerdown',e=>{dragging=true; dragTo(e);});
+  arena.addEventListener('pointermove',e=>{if(dragging) dragTo(e);});
+  ['pointerup','pointerleave','pointercancel'].forEach(ev=>arena.addEventListener(ev,()=>dragging=false));
+
+  function heart(){
+    const h = document.createElement('span');
+    h.className = 'heartP';
+    h.textContent = ['❤️','💗','💕','💖'][Math.random()*4|0];
+    const s = sizes();
+    h.style.left = (boyX + s.sw + (girlX - boyX - s.sw)/2 + (Math.random()-.5)*30) + 'px';
+    h.style.bottom = (60 + Math.random()*40) + 'px';
+    h.style.fontSize = (14 + Math.random()*10) + 'px';
+    arena.appendChild(h);
+    setTimeout(()=>h.remove(),1200);
+  }
+
+  function loop(now){
+    const dt = Math.min((now-last)/1000, .05); last = now;
+    const s = sizes();
+    if(keys.left)  girlX -= SPEED*dt;
+    if(keys.right) girlX += SPEED*dt;
+    girlX = Math.min(Math.max(girlX, s.minX), s.maxX);
+    gGirl.style.left = girlX + 'px';
+    // walking animation while she moves
+    if(lastGirlX !== null && Math.abs(girlX - lastGirlX) > .3) moving = now;
+    lastGirlX = girlX;
+
+    // distance between them as a fraction of the arena width
+    const d = (girlX - (boyX + s.sw)) / s.w;
+    // target energy: 1 when close, 0 when far
+    const target = 1 - Math.min(Math.max((d-CLOSE)/(FAR-CLOSE),0),1);
+    if(target > energy) energy = Math.min(target, energy + GAIN*dt);
+    else                energy = Math.max(target, energy - LOSS*dt);
+
+    fill.style.width = (energy*100) + '%';
+    gBoySprite.style.filter = `grayscale(${1-energy}) brightness(${.85 + energy*.15})`;
+    label.textContent = energy > .95 ? 'Full of love ❤' : energy < .1 ? 'I miss you…' : 'Love energy';
+
+    if(d < CLOSE && now - lastHeart > 260){ heart(); lastHeart = now; }
+    if(now - moving < 120) setPose(gGirlSprite, (now/160|0)%2 ? 'walk1' : 'walk2');
+    else setPose(gGirlSprite, d < CLOSE ? 'hug' : 'idle');
+    setPose(gBoyBox, energy > .7 ? 'happy' : energy < .4 ? 'sad' : 'idle');
+    sunny.style.opacity = energy;
+    gloom.style.opacity = 1 - energy;
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+})();
+
+/* =========================================================
+   "ONE MORE HUG?" BUTTON
+   ========================================================= */
+function magic(x, y){
+  document.body.classList.add('flash'); setTimeout(()=>document.body.classList.remove('flash'), 600);
+  const aura = document.createElement('div'); aura.className = 'aura';
+  Object.assign(aura.style,{left:x+'px',top:y+'px'}); document.body.appendChild(aura);
+  setTimeout(()=>aura.remove(), 2400);
+  for(let i=0;i<3;i++) setTimeout(()=>{
+    const ring = document.createElement('div'); ring.className = 'ring';
+    Object.assign(ring.style,{left:x+'px',top:y+'px'}); document.body.appendChild(ring);
+    setTimeout(()=>ring.remove(), 1300);
+  }, i*350);
+  // sparkles orbiting the couple
+  const bits = ['✨','💫','⭐','✨','💖'];
+  for(let i=0;i<14;i++){
+    const s = document.createElement('span'); s.textContent = bits[i%bits.length];
+    Object.assign(s.style,{position:'fixed',left:0,top:0,fontSize:(12+Math.random()*12)+'px',pointerEvents:'none',zIndex:14});
+    document.body.appendChild(s);
+    const a0 = i/14*Math.PI*2, rad = 70 + Math.random()*30, frames = [];
+    for(let k=0;k<=12;k++){
+      const a = a0 + k/12*Math.PI*2, rr = rad*(0.4 + k/12*0.8);
+      frames.push({transform:`translate(${x+Math.cos(a)*rr}px,${y+Math.sin(a)*rr*.7}px) scale(${k<11?1:.2})`,opacity:k<11?1:0});
+    }
+    s.animate(frames,{duration:2200,easing:'ease-out'}).onfinish = ()=>s.remove();
+  }
+}
+
+// scroll back to the top so the hug is visible, then hug
+document.getElementById('hugBtn').addEventListener('click', ()=>{
+  if(hugging) return;
+  if(window.scrollY > 5){
+    window.scrollTo({top:0, behavior:'smooth'});
+    let done = false;
+    const go = ()=>{ if(done) return; done = true; clearInterval(wait); setTimeout(doHug, 150); };
+    const wait = setInterval(()=>{ if(window.scrollY <= 5) go(); }, 50);
+    setTimeout(go, 1500);   // fallback in case the scroll is interrupted
+  } else doHug();
+});
+function doHug(){
+  const boy = document.getElementById('topBoy'), girl = document.getElementById('topGirl');
+  const b = boy.getBoundingClientRect(), g = girl.getBoundingClientRect();
+  const mid = (b.left + b.width/2 + g.left + g.width/2)/2;
+  // walk toward each other, embrace (real hug sprite) with a burst of magic, then walk back
+  if(hugging) return;
+  hugging = true;
+  const W = topBoySprite.offsetWidth, u = W / CONFIG.sprites.boy.map[0].length;
+  const bc = mid - 10*u, gc = mid + 10*u;
+  const dxB = bc - (b.left + b.width/2), dxG = gc - (g.left + g.width/2);
+  const T = 8000, hold0 = T*.2, hold1 = T*.82;
+  const seq = dx => [
+    {transform:'translate(0,0)'},
+    {transform:`translate(${dx}px,0)`,offset:.2},
+    {transform:`translate(${dx}px,0)`,offset:.82},
+    {transform:'translate(0,0)'}
+  ];
+  boy.animate(seq(dxB),{duration:T,easing:'linear'}); girl.animate(seq(dxG),{duration:T,easing:'linear'});
+  [topBoySprite, topGirlSprite].forEach(s=>walkFor(s, hold0));
+  const coupleEl = document.getElementById('couple');
+  setTimeout(()=>{
+    const r = topBoySprite.getBoundingClientRect();
+    coupleEl.style.left = (bc - 25*u) + 'px';
+    coupleEl.style.top = r.top + 'px';
+    [topBoySprite, topGirlSprite].forEach(s=>s.style.visibility='hidden');
+    coupleEl.classList.add('show');
+    coupleEl.animate([{transform:'translateY(0)'},{transform:'translateY(-6px)'},{transform:'translateY(0)'}],{duration:1000,iterations:5,easing:'ease-in-out'});
+    magic(mid, r.top + r.height*.5);
+    // the love line appears above us while we hug
+    let line = document.getElementById('hugLine');
+    if(!line){ line = document.createElement('div'); line.id = 'hugLine'; document.body.appendChild(line); }
+    line.textContent = document.getElementById('finalLine').textContent;
+    Object.assign(line.style,{left:(innerWidth/2)+'px', top:(r.bottom + 10)+'px'});
+    requestAnimationFrame(()=>line.classList.add('show'));
+    document.getElementById('finalLine').classList.add('show');
+  }, hold0);
+  setTimeout(()=>{
+    coupleEl.classList.remove('show');
+    document.getElementById('hugLine').classList.remove('show');
+    [topBoySprite, topGirlSprite].forEach(s=>{ s.style.visibility=''; walkFor(s, T - hold1); });
+  }, hold1);
+  setTimeout(()=>{ hugging = false; }, T);
+
+  // heart burst at the meeting point
+  const y = b.top + b.height*0.3;
+  const bits = ['❤️','💖','💗','💕','🌸','✨'];
+  for(let i=0;i<26;i++){
+    setTimeout(()=>{
+      const h = document.createElement('span');
+      h.textContent = bits[Math.random()*bits.length|0];
+      Object.assign(h.style,{position:'fixed',left:0,top:0,fontSize:(16+Math.random()*18)+'px',pointerEvents:'none',zIndex:20});
+      document.body.appendChild(h);
+      const ang = Math.random()*Math.PI*2, dist = 60 + Math.random()*120;
+      const a = h.animate([
+        {transform:`translate(${mid}px,${y}px) scale(.3)`,opacity:1},
+        {transform:`translate(${mid+Math.cos(ang)*dist}px,${y+Math.sin(ang)*dist-60}px) scale(1.2)`,opacity:0}
+      ],{duration:1400+Math.random()*600,easing:'ease-out'});
+      a.onfinish = ()=>h.remove();
+    }, 1500 + i*60);
+  }
+}
+</script>
+</body>
+</html>
