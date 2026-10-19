@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Happy Birthday, Hidaya</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600;1,700&family=Dancing+Script:wght@600;700&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
 /* =========================================================
@@ -22,6 +22,7 @@
 
   --font-title:'Cormorant Garamond',serif;
   --font-ui:'Jost',sans-serif;
+  --font-script:'Dancing Script','Brush Script MT',cursive;
 
   --px:2px;                /* size of one pixel in the top sprites */
 }
@@ -33,7 +34,12 @@ body{
   background:radial-gradient(ellipse at 50% 15%,var(--bg-top),var(--bg-bottom) 75%) fixed;
   overflow-x:hidden;
   -webkit-tap-highlight-color:transparent;
+  /* clicking buttons many times must never select / highlight the text */
+  -webkit-user-select:none;user-select:none;-webkit-touch-callout:none;
+  touch-action:manipulation;
 }
+button{-webkit-user-select:none;user-select:none;outline:none}
+button:focus-visible{outline:2px solid var(--rose);outline-offset:3px}
 
 /* twinkling stars */
 .stars,.stars2{position:fixed;inset:0;pointer-events:none;z-index:0}
@@ -71,7 +77,7 @@ body{
 main{
   position:relative;z-index:2;
   max-width:1050px;margin:0 auto;
-  height:100vh;height:100dvh;overflow:hidden;
+  min-height:100vh;min-height:100dvh;
   padding:clamp(8px,1.8vh,22px) 16px;
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(8px,1.8vh,22px);
 }
@@ -96,14 +102,23 @@ main{
 @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
 
 .card{
-  background:var(--glass);
-  border:1px solid rgba(255,143,182,.35);
+  background:rgba(22,10,38,.62);
+  border:1px solid rgba(255,143,182,.45);
   border-radius:30px;
   padding:clamp(12px,2.4vh,30px) clamp(16px,2.5vw,30px);
   text-align:center;
-  box-shadow:0 0 60px rgba(255,143,182,.12), inset 0 0 40px rgba(255,143,182,.04);
-  backdrop-filter:blur(6px);
+  box-shadow:0 0 60px rgba(255,143,182,.16), inset 0 0 40px rgba(255,143,182,.05);
+  backdrop-filter:blur(10px);
+  position:relative;
 }
+.card::before{
+  content:"";position:absolute;inset:-1px;border-radius:inherit;padding:1.5px;pointer-events:none;
+  background:linear-gradient(120deg,#ff8fb6,#ffe0a8,#a78bfa,#ff8fb6);background-size:300% 300%;
+  animation:borderflow 7s linear infinite;
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;
+  mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);
+}
+@keyframes borderflow{to{background-position:300% 300%}}
 .eyebrow{font-size:.68rem;letter-spacing:.5em;text-transform:uppercase;color:var(--rose);padding-left:.5em;margin-bottom:clamp(2px,.8vh,10px)}
 .card h1{
   font-family:var(--font-title);font-style:italic;font-weight:500;
@@ -111,22 +126,33 @@ main{
   color:#fff;text-shadow:0 0 30px rgba(255,143,182,.55);
 }
 #message{
-  font-family:var(--font-title);font-style:italic;font-weight:500;
-  font-size:clamp(1rem,2.7vh,1.65rem);
-  line-height:1.42;
-  white-space:pre-line;color:#fff4ea;
+  font-family:var(--font-title);font-style:italic;font-weight:600;letter-spacing:.012em;
+  font-size:clamp(1.15rem,3.1vh,1.9rem);
+  line-height:1.5;
+  color:#fff6ee;text-shadow:0 1px 6px rgba(0,0,0,.65);
 }
-.para{display:block;opacity:0;animation:paraIn 1.2s ease forwards;margin-bottom:.55em}
+.para{display:block;opacity:0;margin-bottom:.7em;animation:paraIn 1.3s cubic-bezier(.2,.7,.2,1) forwards}
 .para:last-child{margin-bottom:0}
-@keyframes paraIn{to{opacity:1}}
+@keyframes paraIn{from{opacity:0;transform:translateY(14px);filter:blur(6px)}to{opacity:1;transform:none;filter:none}}
+/* the greeting and the sign-off are handwritten and glow */
+.para.greet,.para.sign{
+  font-family:var(--font-script);font-style:normal;font-weight:700;letter-spacing:.01em;
+  background:linear-gradient(90deg,#ffb3d1,#ffe0a8,#ff9fc4,#ffe0a8);background-size:250% 100%;
+  -webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;
+  text-shadow:none;filter:drop-shadow(0 0 14px rgba(255,143,182,.55));
+  animation:paraIn 1.3s cubic-bezier(.2,.7,.2,1) forwards, shimmer 6s linear infinite;
+}
+.para.greet{font-size:1.55em;line-height:1.15;margin-bottom:.45em}
+.para.sign{font-size:1.7em;line-height:1.2;margin-top:.15em}
+@keyframes shimmer{to{background-position:250% 0}}
 .cursor{display:inline-block;width:2px;height:1em;background:var(--cream);margin-left:2px;vertical-align:text-bottom;animation:blink .8s steps(1) infinite}
 @keyframes blink{50%{opacity:0}}
 
 /* =========================================================
    PIXEL SPRITES (rendered by JS with box-shadow)
    ========================================================= */
-.sprite{position:relative;width:calc(var(--w) * var(--px));height:calc(var(--h) * var(--px));image-rendering:pixelated}
-.sprite .px{position:absolute;top:0;left:0;width:var(--px);height:var(--px)}
+.sprite{--s:calc(var(--px) * var(--fit,1));position:relative;width:calc(var(--w) * var(--s));height:calc(var(--h) * var(--s));image-rendering:pixelated}
+.sprite .px{position:absolute;top:0;left:0;width:var(--s);height:var(--s)}
 .sprite{filter:drop-shadow(0 4px 0 rgba(74,44,94,.25))}
 .sprite img{width:100%;height:100%;image-rendering:pixelated;display:block}
 .flower{position:absolute;font-size:calc(var(--px) * 3.2);top:34%;line-height:1}
@@ -136,7 +162,7 @@ main{
 /* =========================================================
    MINI GAME
    ========================================================= */
-.game{width:100%;max-width:640px;text-align:center}
+.game{width:100%;max-width:440px;text-align:center}
 .game h2{
   font-family:var(--font-title);font-style:italic;font-weight:500;font-size:clamp(1.2rem,3.2vh,2rem);
   color:var(--cream);text-shadow:0 0 24px rgba(255,233,199,.4);
@@ -145,8 +171,8 @@ main{
 .game p.hint small{opacity:.7;font-size:.8rem;letter-spacing:.05em}
 
 #arena{
-  --px:1.6px;
-  position:relative;height:clamp(168px,24vh,215px);border-radius:24px;overflow:hidden;
+  --px:1.15px;
+  position:relative;height:clamp(120px,17vh,155px);border-radius:20px;overflow:hidden;
   background:
     radial-gradient(1.5px 1.5px at 15% 25%,#fff,transparent),
     radial-gradient(1px 1px at 40% 15%,#ffd9ec,transparent),
@@ -263,13 +289,13 @@ body.flash::after{content:"";position:fixed;inset:0;z-index:30;pointer-events:no
   .card{padding:14px 10px 16px;border-radius:20px}
   .eyebrow{font-size:.56rem;letter-spacing:.35em;margin-bottom:2px}
   .card h1{font-size:clamp(1.25rem,6.4vw,1.7rem);margin-bottom:8px}
-  #message{font-size:clamp(.98rem,4.4vw,1.15rem);line-height:1.38}
+  #message{font-size:clamp(1.05rem,4.7vw,1.25rem);line-height:1.42}
   .para{margin-bottom:.45em}
-  .game h2{font-size:1.35rem}
+  .game h2{font-size:1.1rem}
   .game p.hint{font-size:.74rem;margin:0 0 6px}
   .game p.hint small{display:none}
-  #arena{--px:1.3px;height:clamp(140px,21vh,175px);border-radius:18px}
-  #energyWrap{width:72px;margin-bottom:4px}
+  #arena{--px:1px;height:clamp(105px,16vh,130px);border-radius:14px}
+  #energyWrap{width:60px;margin-bottom:3px}
   #energyLabel{font-size:.48rem}
   .touch{margin-top:6px;gap:12px}
   .touch button{width:72px;height:38px;font-size:1rem}
@@ -277,9 +303,43 @@ body.flash::after{content:"";position:fixed;inset:0;z-index:30;pointer-events:no
   #hugBtn:hover{letter-spacing:.18em}
   #hugLine{padding:14px 16px;font-size:1.05rem}
 }
-/* short screens (e.g. phones held sideways): let the page scroll instead of cutting things off */
+/* big screens: a little larger */
+@media (min-width:1300px) and (min-height:880px){
+  :root{--px:2.4px}
+  #arena{--px:1.35px;height:clamp(140px,19vh,175px)}
+  .game{max-width:500px}
+}
+/* tablets / small laptops */
+@media (min-width:701px) and (max-width:1100px){
+  :root{--px:1.6px}
+  #arena{--px:1.1px}
+  .stage{gap:14px}
+  #message{font-size:clamp(1.1rem,2.9vh,1.55rem)}
+}
+/* very small phones */
+@media (max-width:380px){
+  :root{--px:.8px}
+  main{padding:8px 6px 12px}
+  .card{padding:12px 8px 14px}
+  .eyebrow{letter-spacing:.25em}
+  .card h1{font-size:clamp(1.1rem,6vw,1.4rem)}
+  #message{font-size:1rem;line-height:1.38}
+  #arena{--px:.9px;height:105px}
+  .game h2{font-size:1.1rem}
+  #hugBtn{font-size:.7rem;padding:9px 18px}
+  .touch button{width:64px;height:34px}
+}
+/* phones held sideways / very short screens: let the page scroll, characters beside the message */
 @media (max-height:560px){
-  main{height:auto;min-height:100vh;overflow:visible}
+  main{height:auto;min-height:100vh;min-height:100dvh;overflow:visible;padding-top:8px;padding-bottom:12px}
+  :root{--px:1.1px}
+  #arena{--px:.9px;height:100px}
+  .card{padding:10px 16px}
+  #message{font-size:clamp(1rem,3vw,1.2rem)}
+}
+/* notches / home bar */
+@supports (padding:max(0px)){
+  main{padding-left:max(8px,env(safe-area-inset-left));padding-right:max(8px,env(safe-area-inset-right));padding-bottom:max(12px,env(safe-area-inset-bottom))}
 }
 @media (prefers-reduced-motion:reduce){*{animation-duration:.01s!important}}
 </style>
@@ -1271,7 +1331,7 @@ function buildSprite(el, key){
   for(const [pose, rows] of Object.entries(def.frames)){
     const shadows = [];
     rows.forEach((row,y)=>[...row].forEach((ch,x)=>{
-      if(ch !== '.' && def.palette[ch]) shadows.push(`calc(${x} * var(--px)) calc(${y} * var(--px)) 0 ${def.palette[ch]}`);
+      if(ch !== '.' && def.palette[ch]) shadows.push(`calc(${x} * var(--s)) calc(${y} * var(--s)) 0 ${def.palette[ch]}`);
     }));
     const px = document.createElement('div');
     px.className = 'px';
@@ -1303,6 +1363,26 @@ const topBoySprite = document.querySelector('#topBoy .sprite'), topGirlSprite = 
 let hugging = false;
 
 /* =========================================================
+   AUTO-FIT: if the page is taller than the window, shrink the characters a little
+   until everything fits (on phones the page simply scrolls)
+   ========================================================= */
+const rootEl = document.documentElement, mainEl = document.querySelector('main');
+function announceFit(){ dispatchEvent(new Event('spritesresized')); }
+function fitToScreen(){
+  rootEl.style.setProperty('--fit', 1); announceFit();
+  if(!matchMedia('(min-width:701px) and (min-height:561px)').matches) return;
+  let fit = 1;
+  for(let i=0;i<8 && mainEl.scrollHeight > innerHeight + 1 && fit > .5;i++){
+    fit = Math.max(.5, fit - .08);
+    rootEl.style.setProperty('--fit', fit.toFixed(2)); announceFit();   // arena resizes with the characters
+  }
+}
+addEventListener('resize', ()=>{ fitToScreen(); announceFit(); });
+addEventListener('load', ()=>{ fitToScreen(); announceFit(); });
+if(document.fonts && document.fonts.ready) document.fonts.ready.then(()=>{ fitToScreen(); announceFit(); });
+fitToScreen();
+
+/* =========================================================
    FLOATING BACKGROUND
    ========================================================= */
 const floaters = document.getElementById('floaters');
@@ -1327,9 +1407,10 @@ const msgEl = document.getElementById('message');
 const paras = CONFIG.message.split('\n\n');
 paras.forEach((para,i)=>{
   const p = document.createElement('span');
-  p.className = 'para';
-  p.textContent = para;
-  p.style.animationDelay = (i*0.35) + 's';
+  p.className = 'para' + (i === 0 ? ' greet' : i === paras.length-1 ? ' sign' : '');
+  let html = para.replace(/&/g,'&amp;').replace(/</g,'&lt;');
+  p.innerHTML = html;
+  p.style.animationDelay = (i*0.45) + 's';
   msgEl.appendChild(p);
 });
 
@@ -1386,7 +1467,7 @@ setInterval(()=>{
   const CLOSE = 0.22;           // "close" distance (fraction of arena width)
   const FAR   = 0.65;           // beyond this he's fully gray
   const GAIN  = 0.7;            // how fast energy refills
-  const LOSS  = 0.18;           // how fast energy drains
+  const LOSS  = 0.7;            // how fast energy drains when she is far (bigger = faster)
   let energy = 0.5, lastHeart = 0, last = performance.now();
   let girlX = 0, boyX = 16, dragging = false;
   const keys = {left:false,right:false};
@@ -1396,11 +1477,17 @@ setInterval(()=>{
   const sunny = document.getElementById('sunny'), gloom = document.getElementById('gloom');
 
   function sizes(){
-    const px = parseFloat(getComputedStyle(arena).getPropertyValue('--px')) || 5;
-    const sw = CONFIG.sprites.girl.map[0].length*px, w = arena.clientWidth;
+    const sw = gGirlSprite.offsetWidth || 60, w = arena.clientWidth;
     return {w, sw, minX: boyX + sw + 10, maxX: w - sw - 6};
   }
+  // make the arena exactly as tall as it needs to be: energy bar + Ayman + ground + a little sky
+  function sizeArena(){
+    const ground = document.getElementById('ground').offsetHeight || 22;
+    arena.style.height = Math.ceil(gBoy.offsetHeight + ground + 16) + 'px';
+  }
+  addEventListener('spritesresized', sizeArena);
   function init(){
+    sizeArena();
     gBoy.style.left = boyX + 'px';
     const s = sizes();
     girlX = Math.min(Math.max(girlX || s.maxX, s.minX), s.maxX);
